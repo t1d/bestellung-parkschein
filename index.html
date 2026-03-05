@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antrag Parkplatz – PSG</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="header-badge">Psychiatrie St.Gallen</div>
+    <h1>Antrag Parkplatz &amp;<br>Mobilitätsbonus</h1>
+    <p class="header-sub">Gemäss 1.8_KO_Parkreglement</p>
+  </div>
+
+  <div id="main-form">
+
+    <!-- Art des Antrags -->
+    <div class="card">
+      <div class="card-title">Art des Antrags</div>
+      <div class="field">
+        <label for="antrag-typ">Antragsart <span class="req">*</span></label>
+        <select id="antrag-typ" onchange="handleTypChange(this.value)">
+          <option value="">— Bitte wählen —</option>
+          <option value="neu">Neu</option>
+          <option value="verlaengert">Verlängerung</option>
+          <option value="mutation">Mutation</option>
+          <option value="kein">Kein Parkplatz (Mobilitätsbonus)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- NEU / VERLÄNGERT / MUTATION -->
+    <div id="section-pp" class="section">
+
+      <!-- Standort -->
+      <div class="card">
+        <div class="card-title">Standort(e)</div>
+        <div class="field">
+          <label>Gewünschter Standort <span class="req">*</span></label>
+          <div class="standort-grid">
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Wil P2/P3 (geteilt)">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Wil – P2 / P3 (geteilt)</span>
+                <span class="check-price">CHF 450.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Wil P1 C05/A02">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Wil – P1 bei C05 / A02</span>
+                <span class="check-price">CHF 600.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="St.Gallen">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">St.Gallen</span>
+                <span class="check-price">CHF 720.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Rorschach">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Rorschach</span>
+                <span class="check-price">CHF 720.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Wattwil">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Wattwil</span>
+                <span class="check-price">CHF 720.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Pfäfers (aussen)">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Pfäfers</span>
+                <span class="check-price">CHF 120.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Pfäfers Unterstand B3">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Pfäfers – Unterstand B3</span>
+                <span class="check-price">CHF 480.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Pfäfers Tiefgarage">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Pfäfers – Tiefgarage</span>
+                <span class="check-price">CHF 600.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Heerbrugg Schloss">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Heerbrugg – Schloss / Schlosstr. 203a</span>
+                <span class="check-price">CHF 720.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Heerbrugg Erlen">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Heerbrugg – Erlen / Bahnhofstr. 18</span>
+                <span class="check-price">CHF 720.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Sargans (geteilt)">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Sargans (geteilt)</span>
+                <span class="check-price">CHF 720.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Rapperswil">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Rapperswil</span>
+                <span class="check-price">CHF 720.– / Jahr</span>
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" name="standort" value="Uznach">
+              <span class="check-box"><span class="check-mark"></span></span>
+              <span class="check-content">
+                <span class="check-label">Uznach</span>
+                <span class="check-price">CHF 660.– / Jahr</span>
+              </span>
+            </label>
+
+          </div>
+          <p class="error-msg" id="err-standort">Bitte mindestens einen Standort wählen.</p>
+        </div>
+      </div>
+
+      <!-- Personalangaben -->
+      <div class="card">
+        <div class="card-title">Angaben zur Person</div>
+
+        <div class="field">
+          <label for="datum">Gültig ab <span class="req">*</span></label>
+          <input type="date" id="datum" />
+        </div>
+
+        <div class="field">
+          <label for="beschaeftigung">Beschäftigungsgrad <span class="req">*</span></label>
+          <input type="number" id="beschaeftigung" min="0" max="100" placeholder="z.B. 80" />
+          <p class="hint">0–100 %</p>
+          <p class="error-msg" id="err-beschaeftigung">Bitte geben Sie einen Wert zwischen 0 und 100 ein.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="row-2">
+          <div class="field">
+            <label for="name">Name <span class="req">*</span></label>
+            <input type="text" id="name" placeholder="Muster" />
+          </div>
+          <div class="field">
+            <label for="vorname">Vorname <span class="req">*</span></label>
+            <input type="text" id="vorname" placeholder="Max" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">E-Mail (privat) <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="max.muster@beispiel.ch" />
+          <p class="error-msg" id="err-email">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
+        </div>
+
+        <div class="field">
+          <label for="funktion">Funktion / Berufsbezeichnung <span class="req">*</span></label>
+          <input type="text" id="funktion" placeholder="z.B. Pflegefachfrau HF" />
+        </div>
+
+        <div class="field">
+          <label for="abteilung">Abteilung <span class="req">*</span></label>
+          <input type="text" id="abteilung" placeholder="z.B. Akutpsychiatrie" />
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label>Autokennzeichen</label>
+          <p class="hint" style="margin-bottom:10px">Bis zu 3 Kennzeichen können angegeben werden.</p>
+          <div class="row-3">
+            <input type="text" id="kfz1" placeholder="z.B. SG 123456" maxlength="12" />
+            <input type="text" id="kfz2" placeholder="Optional" maxlength="12" />
+            <input type="text" id="kfz3" placeholder="Optional" maxlength="12" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- KEIN PP – Mobilitätsbonus -->
+    <div id="section-kein" class="section">
+      <div class="card">
+        <div class="card-title">Mobilitätsbonus</div>
+
+        <div class="mobility-banner">
+          <p>«Ich entscheide mich für den Mobilitätsbonus und verzichte auf jeglichen Anspruch einer Parkkarte.»</p>
+        </div>
+
+        <label class="check-item confirm-item">
+          <input type="checkbox" id="confirm-cb">
+          <span class="check-box"><span class="check-mark"></span></span>
+          <span class="check-content">
+            <span class="check-label">Ich bestätige, dass ich den obenstehenden Verzicht gelesen habe und damit einverstanden bin.</span>
+          </span>
+        </label>
+        <p class="error-msg" id="err-confirm">Bitte bestätigen Sie den Verzicht.</p>
+
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div id="submit-section" style="display:none;">
+      <button class="submit-btn" onclick="handleSubmit()">Antrag einreichen</button>
+      <p class="submit-note">Der Antrag wird per E-Mail an <a href="mailto:parking@psychiatrie-sg.ch">parking@psychiatrie-sg.ch</a> weitergeleitet.</p>
+    </div>
+
+  </div><!-- end main-form -->
+
+  <!-- Success -->
+  <div class="success-card" id="success-card">
+    <div class="success-icon">✓</div>
+    <h2>Antrag eingereicht</h2>
+    <p>Vielen Dank. Ihr Antrag wurde erfolgreich übermittelt.<br>Bei Fragen: <a href="mailto:parking@psychiatrie-sg.ch">parking@psychiatrie-sg.ch</a></p>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
