@@ -10,3 +10,9 @@ desktop.ini
 .idea/
 *.swp
 *.swo
+
+# Node
+node_modules/
+
+# SMTP credentials – copy config.example.json to config.json and fill in your values
+config.json

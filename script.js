@@ -47,15 +47,16 @@ function markField(id, hasError) {
 }
 
 // ── Submit ─────────────────────────────────────────────────────────────────
-function handleSubmit() {
+async function handleSubmit() {
   const typ = document.getElementById('antrag-typ').value;
   let valid = true;
+  let payload = { typ };
 
   if (['neu', 'verlaengert', 'mutation'].includes(typ)) {
 
     // Standort – at least one must be checked
-    const standorte = document.querySelectorAll('input[name=standort]:checked');
-    const noStandort = standorte.length === 0;
+    const standorteEls = document.querySelectorAll('input[name=standort]:checked');
+    const noStandort = standorteEls.length === 0;
     setError('err-standort', noStandort);
     if (noStandort) valid = false;
 
@@ -96,6 +97,29 @@ function handleSubmit() {
     markField('abteilung', !abt);
     if (!abt) valid = false;
 
+    // Autokennzeichen 1 – required
+    const kfz1 = document.getElementById('kfz1').value.trim();
+    markField('kfz1', !kfz1);
+    setError('err-kfz1', !kfz1);
+    if (!kfz1) valid = false;
+
+    if (valid) {
+      payload = {
+        ...payload,
+        standorte: Array.from(standorteEls).map(el => el.value),
+        datum,
+        beschaeftigung: bg,
+        name,
+        vorname,
+        email,
+        funktion,
+        abteilung: abt,
+        kfz1,
+        kfz2: document.getElementById('kfz2').value.trim(),
+        kfz3: document.getElementById('kfz3').value.trim()
+      };
+    }
+
   } else if (typ === 'kein') {
 
     // Mobilitätsbonus confirmation
@@ -107,8 +131,30 @@ function handleSubmit() {
 
   if (!valid) return;
 
-  // All good – show success state
-  document.getElementById('main-form').classList.add('hidden');
-  document.getElementById('success-card').classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Send to backend
+  const btn = document.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Wird gesendet…';
+
+  try {
+    const res = await fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+
+    if (!res.ok || !json.success) {
+      throw new Error(json.error || 'Unbekannter Fehler');
+    }
+
+    // All good – show success state
+    document.getElementById('main-form').classList.add('hidden');
+    document.getElementById('success-card').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (err) {
+    alert('Fehler beim Senden: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = 'Antrag einreichen';
+  }
 }

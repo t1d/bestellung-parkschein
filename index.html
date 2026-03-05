@@ -213,13 +213,14 @@
         <div class="divider"></div>
 
         <div class="field">
-          <label>Autokennzeichen</label>
-          <p class="hint" style="margin-bottom:10px">Bis zu 3 Kennzeichen können angegeben werden.</p>
+          <label>Autokennzeichen <span class="req">*</span></label>
+          <p class="hint" style="margin-bottom:10px">Das erste Kennzeichen ist erforderlich. Bis zu 3 Kennzeichen können angegeben werden.</p>
           <div class="row-3">
             <input type="text" id="kfz1" placeholder="z.B. SG 123456" maxlength="12" />
             <input type="text" id="kfz2" placeholder="Optional" maxlength="12" />
             <input type="text" id="kfz3" placeholder="Optional" maxlength="12" />
           </div>
+          <p class="error-msg" id="err-kfz1">Bitte geben Sie mindestens das erste Autokennzeichen ein.</p>
         </div>
 
       </div>
