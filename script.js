@@ -1,9 +1,15 @@
+// ── Arealplan PDFs (only for locations that have one) ─────────────────────────
+const AREALPLAN = {
+  'Heerbrugg': 'files/Arealplan_A4_quer_Heerbrugg_aktuell.pdf',
+  'Pfäfers':   'files/Arealplan_A4_quer_Pfaefers_aktuell.pdf',
+  'Wil':       'files/Arealplan_A4_quer_Wil_aktuell.pdf'
+};
+
 // ── Standort data ─────────────────────────────────────────────────────────────
 // payment: 'parkingpay' | 'salär'
 // geteilt: true = geteilter Parkplatz, false = fix zugeteilt
 const STANDORT_DATA = {
   'Heerbrugg': {
-    mapQ: 'Schlosstrasse+203a+9435+Heerbrugg+Switzerland',
     payment: 'salär',
     options: [
       { value: 'Heerbrugg Schloss', label: 'Schloss / Schlosstr. 203a', price: 'CHF 720.– / Jahr', geteilt: false },
@@ -11,7 +17,6 @@ const STANDORT_DATA = {
     ]
   },
   'Pfäfers': {
-    mapQ: 'Psychiatrische+Klinik+Pfäfers+7312',
     payment: 'parkingpay',
     options: [
       { value: 'Pfäfers aussen',        label: 'Parkplatz aussen', price: 'CHF 120.– / Jahr', geteilt: true },
@@ -20,52 +25,45 @@ const STANDORT_DATA = {
     ]
   },
   'Rapperswil': {
-    mapQ: 'Psychiatrische+Klinik+Rapperswil+SG',
     payment: 'salär',
     options: [
       { value: 'Rapperswil', label: 'Rapperswil', price: 'CHF 720.– / Jahr', geteilt: false }
     ]
   },
   'Rorschach': {
-    mapQ: 'Psychiatrie+Rorschach+SG',
     payment: 'parkingpay',
     options: [
       { value: 'Rorschach', label: 'Rorschach', price: 'CHF 720.– / Jahr', geteilt: false }
     ]
   },
   'Sargans': {
-    mapQ: 'Psychiatrie+Sargans+SG',
     payment: 'salär',
     options: [
-      { value: 'Sargans', label: 'Sargans (geteilt)', price: 'CHF 720.– / Jahr', geteilt: true }
+      { value: 'Sargans', label: 'Sargans (Parkplatz Sharing)', price: 'CHF 720.– / Jahr', geteilt: true }
     ]
   },
   'St.Gallen': {
-    mapQ: 'Psychiatrie+St.Gallen+Rorschacher+Strasse+69',
     payment: 'parkingpay',
     options: [
       { value: 'St.Gallen', label: 'St.Gallen', price: 'CHF 720.– / Jahr', geteilt: false }
     ]
   },
   'Uznach': {
-    mapQ: 'Psychiatrie+Uznach+SG',
     payment: 'salär',
     options: [
       { value: 'Uznach', label: 'Uznach', price: 'CHF 660.– / Jahr', geteilt: false }
     ]
   },
   'Wattwil': {
-    mapQ: 'Spital+Wattwil+SG',
     payment: 'parkingpay',
     options: [
       { value: 'Wattwil', label: 'Wattwil', price: 'CHF 720.– / Jahr', geteilt: true }
     ]
   },
   'Wil': {
-    mapQ: 'Psychiatrische+Dienste+Wil+SG',
     payment: 'parkingpay',
     options: [
-      { value: 'Wil P2/P3', label: 'P2 / P3 (geteilt)',  price: 'CHF 450.– / Jahr', geteilt: true  },
+      { value: 'Wil P2/P3', label: 'P2 / P3 (Parkplatz Sharing)', price: 'CHF 450.– / Jahr', geteilt: true  },
       { value: 'Wil P1',    label: 'P1 bei C05 / A02', price: 'CHF 600.– / Jahr', geteilt: false }
     ]
   }
@@ -75,31 +73,28 @@ const STANDORT_DATA = {
 function handleStandortChange(val) {
   var data     = STANDORT_DATA[val];
   var subDiv   = document.getElementById('standort-suboptions');
-  var mapDiv   = document.getElementById('standort-map');
-  var mapFrame = document.getElementById('map-iframe');
   var notice   = document.getElementById('wil-wattwil-notice');
 
   if (!val || !data) {
     subDiv.style.display = 'none';
-    mapDiv.style.display = 'none';
     notice.style.display = 'none';
     document.getElementById('standort-info').style.display = 'none';
+    document.getElementById('arealplan').style.display = 'none';
     return;
   }
 
   // Wil / Wattwil special notice
   notice.style.display = (val === 'Wil' || val === 'Wattwil') ? 'block' : 'none';
 
-  // Google Maps embed
-  mapFrame.src = 'https://maps.google.com/maps?q=' + data.mapQ + '&output=embed&z=16&hl=de';
-  mapDiv.style.display = 'block';
-
-  // Sub-options – always shown for every location
+  // Sub-options – radio (single selection), auto-select when only one option
+  var autoSelect = data.options.length === 1;
   var grid = document.getElementById('suboptions-grid');
   grid.innerHTML = data.options.map(function (opt) {
+    var checked = autoSelect ? ' checked' : '';
+    var tileClass = autoSelect ? ' is-checked' : '';
     return (
-      '<label class="check-item">' +
-        '<input type="checkbox" name="suboption" value="' + opt.value + '">' +
+      '<label class="check-item' + tileClass + '">' +
+        '<input type="radio" name="suboption" value="' + opt.value + '"' + checked + '>' +
         '<span class="check-box"><span class="check-mark"></span></span>' +
         '<span class="check-content">' +
           '<span class="check-label">'  + opt.label + '</span>' +
@@ -110,6 +105,16 @@ function handleStandortChange(val) {
   }).join('');
   subDiv.style.display = 'block';
   setError('err-suboption', false);
+
+  // Arealplan PDF
+  var arealDiv = document.getElementById('arealplan');
+  var arealFrame = document.getElementById('arealplan-iframe');
+  if (AREALPLAN[val]) {
+    arealFrame.src = AREALPLAN[val];
+    arealDiv.style.display = 'block';
+  } else {
+    arealDiv.style.display = 'none';
+  }
 
   setError('err-standort', false);
   updateLocationInfo();
@@ -144,8 +149,18 @@ document.addEventListener('click', function (e) {
   var cb = tile.querySelector('input[type=checkbox]');
   if (!cb) return;
 
-  cb.checked = !cb.checked;
-  tile.classList.toggle('is-checked', cb.checked);
+  if (cb.type === 'radio') {
+    // Deselect all tiles in this group first
+    document.querySelectorAll('input[name="' + cb.name + '"]').forEach(function (r) {
+      r.checked = false;
+      r.closest('.check-item').classList.remove('is-checked');
+    });
+    cb.checked = true;
+    tile.classList.add('is-checked');
+  } else {
+    cb.checked = !cb.checked;
+    tile.classList.toggle('is-checked', cb.checked);
+  }
 
 });
 
@@ -174,7 +189,7 @@ function handleSubmit() {
   setError('err-standort', noStandort);
   if (noStandort) valid = false;
 
-  // Sub-option (always required)
+  // Parkplatz-Option (always required)
   if (standortVal) {
     var subChecked = document.querySelectorAll('input[name=suboption]:checked');
     var noSub = subChecked.length === 0;
