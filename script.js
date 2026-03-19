@@ -94,75 +94,42 @@ function handleStandortChange(val) {
   mapFrame.src = 'https://maps.google.com/maps?q=' + data.mapQ + '&output=embed&z=16&hl=de';
   mapDiv.style.display = 'block';
 
-  // Sub-options (only when location has multiple parking spots)
-  if (data.options.length > 1) {
-    var grid = document.getElementById('suboptions-grid');
-    grid.innerHTML = data.options.map(function (opt) {
-      return (
-        '<label class="check-item">' +
-          '<input type="checkbox" name="suboption" value="' + opt.value + '">' +
-          '<span class="check-box"><span class="check-mark"></span></span>' +
-          '<span class="check-content">' +
-            '<span class="check-label">'  + opt.label + '</span>' +
-            '<span class="check-price">'  + opt.price + '</span>' +
-          '</span>' +
-        '</label>'
-      );
-    }).join('');
-    subDiv.style.display = 'block';
-    setError('err-suboption', false);
-  } else {
-    subDiv.style.display = 'none';
-  }
+  // Sub-options – always shown for every location
+  var grid = document.getElementById('suboptions-grid');
+  grid.innerHTML = data.options.map(function (opt) {
+    return (
+      '<label class="check-item">' +
+        '<input type="checkbox" name="suboption" value="' + opt.value + '">' +
+        '<span class="check-box"><span class="check-mark"></span></span>' +
+        '<span class="check-content">' +
+          '<span class="check-label">'  + opt.label + '</span>' +
+          '<span class="check-price">'  + opt.price + '</span>' +
+        '</span>' +
+      '</label>'
+    );
+  }).join('');
+  subDiv.style.display = 'block';
+  setError('err-suboption', false);
 
   setError('err-standort', false);
   updateLocationInfo();
 }
 
-// ── Location info badges (payment + parking type) ─────────────────────────────
+// ── Location info badge (payment method) ──────────────────────────────────────
 function updateLocationInfo() {
   var val  = document.getElementById('standort-select').value;
   var data = STANDORT_DATA[val];
   var infoDiv   = document.getElementById('standort-info');
   var paymentEl = document.getElementById('info-payment');
-  var typeEl    = document.getElementById('info-parking-type');
 
   if (!val || !data) {
     infoDiv.style.display = 'none';
     return;
   }
 
-  // Payment method (location-level)
   paymentEl.textContent = data.payment === 'parkingpay'
     ? 'Parkplatz über Parking Pay'
     : 'Abzug über Salär';
-
-  // Parking type: depends on which sub-option(s) are selected for multi-option locations
-  if (data.options.length === 1) {
-    typeEl.textContent    = data.options[0].geteilt ? 'Geteilter Parkplatz' : 'Fix zugeteilt';
-    typeEl.style.display  = 'inline-block';
-  } else {
-    var checkedVals = Array.prototype.slice.call(
-      document.querySelectorAll('input[name=suboption]:checked')
-    ).map(function (cb) { return cb.value; });
-
-    if (checkedVals.length === 0) {
-      typeEl.style.display = 'none';
-    } else {
-      var selected   = data.options.filter(function (o) { return checkedVals.indexOf(o.value) !== -1; });
-      var hasGeteilt = selected.some(function (o) { return o.geteilt; });
-      var hasFix     = selected.some(function (o) { return !o.geteilt; });
-
-      if (hasGeteilt && hasFix) {
-        typeEl.textContent = 'Geteilt und fix zugeteilt';
-      } else if (hasGeteilt) {
-        typeEl.textContent = 'Geteilter Parkplatz';
-      } else {
-        typeEl.textContent = 'Fix zugeteilt';
-      }
-      typeEl.style.display = 'inline-block';
-    }
-  }
 
   infoDiv.style.display = 'flex';
 }
@@ -180,10 +147,6 @@ document.addEventListener('click', function (e) {
   cb.checked = !cb.checked;
   tile.classList.toggle('is-checked', cb.checked);
 
-  // Update parking-type badge when a sub-option tile is toggled
-  if (cb.name === 'suboption') {
-    updateLocationInfo();
-  }
 });
 
 // ── Validation helpers ─────────────────────────────────────────────────────────
@@ -211,8 +174,8 @@ function handleSubmit() {
   setError('err-standort', noStandort);
   if (noStandort) valid = false;
 
-  // Sub-option (required when location has multiple parking spots)
-  if (standortVal && STANDORT_DATA[standortVal] && STANDORT_DATA[standortVal].options.length > 1) {
+  // Sub-option (always required)
+  if (standortVal) {
     var subChecked = document.querySelectorAll('input[name=suboption]:checked');
     var noSub = subChecked.length === 0;
     setError('err-suboption', noSub);
