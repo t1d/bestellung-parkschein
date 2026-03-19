@@ -419,6 +419,33 @@ select {
 #main-form.hidden { display: none; }
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   Location info badges (payment method + parking type)
+───────────────────────────────────────────────────────────────────────────── */
+.standort-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.info-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  padding: 5px 13px;
+  border: 1.5px solid var(--psg-green);
+  color: var(--psg-green-dark);
+  background: var(--psg-green-light);
+}
+
+.info-badge--alt {
+  border-color: var(--psg-black);
+  color: var(--psg-black);
+  background: #f0f0f0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
    Wil / Wattwil notice
 ───────────────────────────────────────────────────────────────────────────── */
 .wil-notice {

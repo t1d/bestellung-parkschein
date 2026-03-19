@@ -18,143 +18,132 @@
 
   <div id="main-form">
 
-    <!-- Art des Antrags -->
+    <!-- Standort -->
     <div class="card">
-      <div class="card-title">Art des Antrags</div>
+      <div class="card-title">Standort</div>
+
       <div class="field">
-        <label for="antrag-typ">Antragsart <span class="req">*</span></label>
-        <select id="antrag-typ" onchange="handleTypChange(this.value)">
+        <label for="standort-select">Gewünschter Standort <span class="req">*</span></label>
+        <select id="standort-select" onchange="handleStandortChange(this.value)">
           <option value="">— Bitte wählen —</option>
-          <option value="neu">Neu</option>
+          <option value="Heerbrugg">Heerbrugg</option>
+          <option value="Pfäfers">Pfäfers</option>
+          <option value="Rapperswil">Rapperswil</option>
+          <option value="Rorschach">Rorschach</option>
+          <option value="Sargans">Sargans</option>
+          <option value="St.Gallen">St.Gallen</option>
+          <option value="Uznach">Uznach</option>
+          <option value="Wattwil">Wattwil</option>
+          <option value="Wil">Wil</option>
         </select>
+        <p class="error-msg" id="err-standort">Bitte einen Standort wählen.</p>
       </div>
+
+      <!-- Sub-options (locations with multiple parking choices) -->
+      <div id="standort-suboptions" class="field" style="display:none;">
+        <label>Parkplatz-Option <span class="req">*</span></label>
+        <div class="standort-grid" id="suboptions-grid"></div>
+        <p class="error-msg" id="err-suboption">Bitte eine Option wählen.</p>
+      </div>
+
+      <!-- Location info badges (payment method + parking type) -->
+      <div id="standort-info" class="standort-info" style="display:none;">
+        <span class="info-badge" id="info-payment"></span>
+        <span class="info-badge info-badge--alt" id="info-parking-type"></span>
+      </div>
+
+      <!-- Wil / Wattwil notice -->
+      <div id="wil-wattwil-notice" class="wil-notice" style="display:none;">
+        <p><strong>Standorte Wil und Wattwil:</strong> Änderungen des Beschäftigungsgrades während der Gültigkeitsdauer der Jahresbewilligung werden nicht automatisch berücksichtigt. Der Antrag ist bei einer Änderung neu einzureichen.</p>
+        <p>Die Kosten der Jahresbewilligung werden in Abhängigkeit vom Beschäftigungsgrad berechnet. Mitarbeitende mit einem Beschäftigungsgrad von weniger als 40% können die Jahresvignette zum Preis von mindestens 40% des vollen Betrages erwerben.</p>
+      </div>
+
+      <!-- Google Maps embed -->
+      <div id="standort-map" style="display:none; margin-top:16px;">
+        <iframe id="map-iframe" width="100%" height="280" frameborder="0" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
     </div>
 
-    <!-- NEU -->
-    <div id="section-pp" class="section">
+    <!-- Personalangaben -->
+    <div class="card">
+      <div class="card-title">Angaben zur Person</div>
 
-      <!-- Standort -->
-      <div class="card">
-        <div class="card-title">Standort</div>
-
-        <div class="field">
-          <label for="standort-select">Gewünschter Standort <span class="req">*</span></label>
-          <select id="standort-select" onchange="handleStandortChange(this.value)">
-            <option value="">— Bitte wählen —</option>
-            <option value="Heerbrugg">Heerbrugg</option>
-            <option value="Pfäfers">Pfäfers</option>
-            <option value="Rapperswil">Rapperswil</option>
-            <option value="Rorschach">Rorschach</option>
-            <option value="Sargans">Sargans</option>
-            <option value="St.Gallen">St.Gallen</option>
-            <option value="Uznach">Uznach</option>
-            <option value="Wattwil">Wattwil</option>
-            <option value="Wil">Wil</option>
-          </select>
-          <p class="error-msg" id="err-standort">Bitte einen Standort wählen.</p>
-        </div>
-
-        <!-- Sub-options (locations with multiple parking choices) -->
-        <div id="standort-suboptions" class="field" style="display:none;">
-          <label>Parkplatz-Option <span class="req">*</span></label>
-          <div class="standort-grid" id="suboptions-grid"></div>
-          <p class="error-msg" id="err-suboption">Bitte eine Option wählen.</p>
-        </div>
-
-        <!-- Wil / Wattwil notice -->
-        <div id="wil-wattwil-notice" class="wil-notice" style="display:none;">
-          <p><strong>Standorte Wil und Wattwil:</strong> Änderungen des Beschäftigungsgrades während der Gültigkeitsdauer der Jahresbewilligung werden nicht automatisch berücksichtigt. Der Antrag ist bei einer Änderung neu einzureichen.</p>
-          <p>Die Kosten der Jahresbewilligung werden in Abhängigkeit vom Beschäftigungsgrad berechnet. Mitarbeitende mit einem Beschäftigungsgrad von weniger als 40% können die Jahresvignette zum Preis von mindestens 40% des vollen Betrages erwerben.</p>
-        </div>
-
-        <!-- Google Maps embed -->
-        <div id="standort-map" style="display:none; margin-top:16px;">
-          <iframe id="map-iframe" width="100%" height="280" frameborder="0" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-
+      <div class="field">
+        <label for="datum">Gültig ab <span class="req">*</span></label>
+        <input type="date" id="datum" />
       </div>
 
-      <!-- Personalangaben -->
-      <div class="card">
-        <div class="card-title">Angaben zur Person</div>
-
-        <div class="field">
-          <label for="datum">Gültig ab <span class="req">*</span></label>
-          <input type="date" id="datum" />
-        </div>
-
-        <div class="field">
-          <label for="beschaeftigung">Beschäftigungsgrad <span class="req">*</span></label>
-          <input type="number" id="beschaeftigung" min="0" max="100" placeholder="z.B. 80" />
-          <p class="hint">0–100 %</p>
-          <p class="error-msg" id="err-beschaeftigung">Bitte geben Sie einen Wert zwischen 0 und 100 ein.</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="row-2">
-          <div class="field">
-            <label for="name">Name <span class="req">*</span></label>
-            <input type="text" id="name" placeholder="Muster" />
-          </div>
-          <div class="field">
-            <label for="vorname">Vorname <span class="req">*</span></label>
-            <input type="text" id="vorname" placeholder="Max" />
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="email">E-Mail (privat) <span class="req">*</span></label>
-          <input type="email" id="email" placeholder="max.muster@beispiel.ch" />
-          <p class="error-msg" id="err-email">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
-        </div>
-
-        <div class="field">
-          <label for="funktion">Funktion / Berufsbezeichnung <span class="req">*</span></label>
-          <input type="text" id="funktion" placeholder="z.B. Pflegefachfrau HF" />
-        </div>
-
-        <div class="field">
-          <label for="abteilung">Abteilung <span class="req">*</span></label>
-          <input type="text" id="abteilung" placeholder="z.B. Akutpsychiatrie" />
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="field">
-          <label>Autokennzeichen</label>
-          <p class="hint" style="margin-bottom:10px">Bis zu 3 Kennzeichen können angegeben werden.</p>
-          <div class="row-3">
-            <input type="text" id="kfz1" placeholder="z.B. SG 123456" maxlength="12" />
-            <input type="text" id="kfz2" placeholder="Optional" maxlength="12" />
-            <input type="text" id="kfz3" placeholder="Optional" maxlength="12" />
-          </div>
-        </div>
-
+      <div class="field">
+        <label for="beschaeftigung">Beschäftigungsgrad <span class="req">*</span></label>
+        <input type="number" id="beschaeftigung" min="0" max="100" placeholder="z.B. 80" />
+        <p class="hint">0–100 %</p>
+        <p class="error-msg" id="err-beschaeftigung">Bitte geben Sie einen Wert zwischen 0 und 100 ein.</p>
       </div>
+
+      <div class="divider"></div>
+
+      <div class="row-2">
+        <div class="field">
+          <label for="name">Name <span class="req">*</span></label>
+          <input type="text" id="name" placeholder="Muster" />
+        </div>
+        <div class="field">
+          <label for="vorname">Vorname <span class="req">*</span></label>
+          <input type="text" id="vorname" placeholder="Max" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">E-Mail (privat) <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="max.muster@beispiel.ch" />
+        <p class="error-msg" id="err-email">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
+      </div>
+
+      <div class="field">
+        <label for="funktion">Funktion / Berufsbezeichnung <span class="req">*</span></label>
+        <input type="text" id="funktion" placeholder="z.B. Pflegefachfrau HF" />
+      </div>
+
+      <div class="field">
+        <label for="abteilung">Abteilung <span class="req">*</span></label>
+        <input type="text" id="abteilung" placeholder="z.B. Akutpsychiatrie" />
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field">
+        <label>Autokennzeichen</label>
+        <p class="hint" style="margin-bottom:10px">Bis zu 3 Kennzeichen können angegeben werden.</p>
+        <div class="row-3">
+          <input type="text" id="kfz1" placeholder="z.B. SG 123456" maxlength="12" />
+          <input type="text" id="kfz2" placeholder="Optional" maxlength="12" />
+          <input type="text" id="kfz3" placeholder="Optional" maxlength="12" />
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Info text -->
+    <div class="card info-card">
+      <p>Fest zugeteilte Parkplätze stehen in beschränkter Anzahl zur Verfügung. Falls bereits alle Parkplätze vergeben sind, wird automatisch eine normale Jahresvignette freigegeben.</p>
+      <p>Nachdem die Freigabe bei Parkingpay erfolgt ist, kann in der App „Parking Pay" auf dem persönlichen Smartphone die PSG-Bewilligung aktiviert werden. Der gesamte Betrag wird unmittelbar danach dem in der App hinterlegten Zahlungsmittel belastet. Beim Austritt wird eine Rückzahlung über die App veranlasst.</p>
+    </div>
+
+    <!-- Parkplatzreglement consent -->
+    <div class="card">
+      <label class="check-item confirm-item">
+        <input type="checkbox" id="reglement-cb">
+        <span class="check-box"><span class="check-mark"></span></span>
+        <span class="check-content">
+          <span class="check-label">Ich willige ein, dass ich das Parkplatzreglement zur Kenntnis genommen habe.</span>
+        </span>
+      </label>
+      <p class="error-msg" id="err-reglement">Bitte bestätigen Sie, dass Sie das Parkplatzreglement gelesen haben.</p>
     </div>
 
     <!-- Submit -->
-    <div id="submit-section" style="display:none;">
-
-      <!-- Info text -->
-      <div class="card info-card">
-        <p>Fest zugeteilte Parkplätze stehen in beschränkter Anzahl zur Verfügung. Falls bereits alle Parkplätze vergeben sind, wird automatisch eine normale Jahresvignette freigegeben.</p>
-        <p>Nachdem die Freigabe bei Parkingpay erfolgt ist, kann in der App „Parking Pay" auf dem persönlichen Smartphone die PSG-Bewilligung aktiviert werden. Der gesamte Betrag wird unmittelbar danach dem in der App hinterlegten Zahlungsmittel belastet. Beim Austritt wird eine Rückzahlung über die App veranlasst.</p>
-      </div>
-
-      <!-- Parkplatzreglement consent -->
-      <div class="card">
-        <label class="check-item confirm-item">
-          <input type="checkbox" id="reglement-cb">
-          <span class="check-box"><span class="check-mark"></span></span>
-          <span class="check-content">
-            <span class="check-label">Ich willige ein, dass ich das Parkplatzreglement zur Kenntnis genommen habe.</span>
-          </span>
-        </label>
-        <p class="error-msg" id="err-reglement">Bitte bestätigen Sie, dass Sie das Parkplatzreglement gelesen haben.</p>
-      </div>
-
+    <div id="submit-section">
       <button class="submit-btn" onclick="handleSubmit()">Antrag einreichen</button>
       <p class="submit-note">Der Antrag wird per E-Mail an <a href="mailto:parking@psychiatrie-sg.ch">parking@psychiatrie-sg.ch</a> weitergeleitet.</p>
     </div>
