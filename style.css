@@ -1,7 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────────
-   PSG Fonts
-   obviously (Adobe Typekit) – headlines
-   NNNouvelleGrotesk – body (self-hosted on PSG infra; system sans fallback)
+   PSG Fonts  –  obviously (Adobe Typekit) for headings
 ───────────────────────────────────────────────────────────────────────────── */
 @import url("https://p.typekit.net/p.css?s=1&k=unb6gdo&ht=tk&f=44087.44091&a=110079385&app=typekit&e=css");
 
@@ -18,9 +16,8 @@
   font-display: auto; font-style: normal; font-weight: 600;
 }
 
-
 /* ─────────────────────────────────────────────────────────────────────────────
-   PSG Design Tokens
+   Design tokens
 ───────────────────────────────────────────────────────────────────────────── */
 :root {
   --psg-black:       #000000;
@@ -49,17 +46,19 @@
 
 body {
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1rem;
   line-height: 1.5;
   background: var(--bg);
-  color: #333;
+  color: #666;
   min-height: 100vh;
   padding: 48px 16px 96px;
 }
 
 a { color: var(--psg-black); text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+.is-hidden { display: none !important; }
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Layout
@@ -82,17 +81,6 @@ a:hover { text-decoration: underline; }
   margin-bottom: 14px;
 }
 
-.header-badge {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--psg-green);
-  margin-bottom: 10px;
-}
-
 h1 {
   font-family: var(--font-display);
   font-weight: 600;
@@ -100,14 +88,6 @@ h1 {
   line-height: 1.1;
   letter-spacing: -.01em;
   color: var(--psg-black);
-  margin-bottom: 6px;
-}
-
-.header-sub {
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--psg-green);
-  letter-spacing: .02em;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -115,9 +95,10 @@ h1 {
 ───────────────────────────────────────────────────────────────────────────── */
 .card {
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: 3px solid var(--psg-black);
-  box-shadow: var(--shadow);
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 4px;
+  border-top: 3px solid var(--psg-green);
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
   padding: 28px;
   margin-bottom: 16px;
 }
@@ -143,7 +124,7 @@ label {
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 13px;
-  color: #333;
+  color: #555;
   margin-bottom: 7px;
 }
 
@@ -156,11 +137,11 @@ input[type=number],
 select {
   width: 100%;
   background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
   padding: 10px 13px;
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 14px;
   color: #333;
   outline: none;
@@ -213,27 +194,19 @@ select {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Standort checkbox grid
-───────────────────────────────────────────────────────────────────────────── */
-.standort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
-@media (max-width: 480px) {
-  .standort-grid { grid-template-columns: 1fr; }
-}
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Check item  (Standort tiles + Confirm)
+   Check item  (confirm tile)
 ───────────────────────────────────────────────────────────────────────────── */
 .check-item {
   display: flex;
   align-items: flex-start;
   gap: 10px;
   padding: 10px 12px;
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
+  border-radius: 4px;
   cursor: pointer;
   transition: border-color .15s, background .15s;
   margin-bottom: 0;
-  font-weight: 300;
+  font-weight: 400;
   background: var(--surface);
 }
 
@@ -254,7 +227,7 @@ select {
   pointer-events: none;
 }
 
-/* Custom checkbox – square, PSG-style */
+/* Custom checkbox */
 .check-box {
   flex-shrink: 0;
   width: 18px;
@@ -296,7 +269,7 @@ select {
 .check-label {
   font-size: 13px;
   font-weight: 400;
-  color: #333;
+  color: #555;
   line-height: 1.4;
 }
 
@@ -307,112 +280,15 @@ select {
   letter-spacing: .02em;
 }
 
-/* Confirm item */
+/* Confirm tile */
 .confirm-item { width: 100%; }
 .confirm-item .check-label { font-size: 13.5px; line-height: 1.5; font-weight: 300; }
+.confirm-item a { color: #1a6cc4; text-decoration: underline; }
+.confirm-item a:hover { color: #0f4a8a; }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Section visibility
+   Radio option tiles
 ───────────────────────────────────────────────────────────────────────────── */
-.section { display: none; }
-.section.active { display: block; }
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Mobility banner
-───────────────────────────────────────────────────────────────────────────── */
-.mobility-banner {
-  background: var(--psg-green-light);
-  border-left: 3px solid var(--psg-green);
-  padding: 18px 20px;
-  margin-bottom: 16px;
-}
-.mobility-banner p {
-  font-size: 14.5px;
-  font-weight: 300;
-  color: #333;
-  line-height: 1.6;
-  font-style: italic;
-  margin: 0;
-}
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Submit button  – PSG primary: black filled, inverse on hover
-───────────────────────────────────────────────────────────────────────────── */
-.submit-btn {
-  width: 100%;
-  background: var(--psg-black);
-  color: #fff;
-  border: 2px solid var(--psg-black);
-  border-radius: 0;
-  padding: 14px 24px;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 13px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background .15s, color .15s;
-}
-.submit-btn:hover { background: var(--surface); color: var(--psg-black); }
-.submit-btn:active { opacity: .85; }
-
-.submit-note {
-  text-align: center;
-  font-size: 12px;
-  font-weight: 300;
-  color: var(--psg-green);
-  margin-top: 12px;
-}
-.submit-note a { color: var(--psg-black); }
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Success card
-───────────────────────────────────────────────────────────────────────────── */
-.success-card {
-  display: none;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: 3px solid var(--psg-success);
-  box-shadow: var(--shadow);
-  padding: 48px 28px;
-  text-align: center;
-}
-.success-card.show { display: block; }
-
-.success-icon {
-  width: 52px;
-  height: 52px;
-  background: var(--psg-green-light);
-  border: 2px solid var(--psg-green);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 18px;
-  font-size: 20px;
-  color: var(--psg-green-dark);
-}
-
-.success-card h2 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 22px;
-  color: var(--psg-black);
-  margin-bottom: 10px;
-}
-.success-card p {
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--psg-green);
-  line-height: 1.6;
-}
-
-#main-form.hidden { display: none; }
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Radio option tiles (suboptions)
-───────────────────────────────────────────────────────────────────────────── */
-
-/* Flex container so tiles shrink to content width on desktop */
 .radio-grid {
   display: flex;
   flex-wrap: wrap;
@@ -442,39 +318,80 @@ select {
   margin: 0;
 }
 
-.check-item.is-radio .check-content {
-  align-items: flex-start;
-}
+.check-item.is-radio .check-content { align-items: flex-start; }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Arealplan link
+   Submit
 ───────────────────────────────────────────────────────────────────────────── */
-.arealplan-link {
-  font-size: 13.5px;
+.submit-btn {
+  width: 100%;
+  background: var(--psg-green);
+  color: #fff;
+  border: 2px solid var(--psg-green);
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .15s ease-in-out, color .15s ease-in-out, border-color .15s ease-in-out;
+}
+.submit-btn:hover { background: var(--psg-green-dark); border-color: var(--psg-green-dark); }
+.submit-btn:active { opacity: .85; }
+
+.submit-note {
+  text-align: center;
+  font-size: 12px;
   font-weight: 300;
-  color: #333;
+  color: var(--psg-green);
+  margin-top: 12px;
 }
-.arealplan-link a {
-  color: #1a6cc4;
-  text-decoration: underline;
-}
-.arealplan-link a:hover {
-  color: #0f4a8a;
-}
+.submit-note a { color: var(--psg-black); }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Parkplatzreglement link
+   Success card
 ───────────────────────────────────────────────────────────────────────────── */
-.confirm-item a {
-  color: #1a6cc4;
-  text-decoration: underline;
+.success-card {
+  background: var(--surface);
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 4px;
+  border-top: 3px solid var(--psg-success);
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+  padding: 48px 28px;
+  text-align: center;
 }
-.confirm-item a:hover {
-  color: #0f4a8a;
+
+.success-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--psg-green-light);
+  border: 2px solid var(--psg-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  font-size: 20px;
+  color: var(--psg-green-dark);
+}
+
+.success-card h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--psg-black);
+  margin-bottom: 10px;
+}
+.success-card p {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--psg-green);
+  line-height: 1.6;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Location info badges (payment method + parking type)
+   Location info badge
 ───────────────────────────────────────────────────────────────────────────── */
 .standort-info {
   display: flex;
@@ -494,12 +411,6 @@ select {
   background: var(--psg-green-light);
 }
 
-.info-badge--alt {
-  border-color: var(--psg-black);
-  color: var(--psg-black);
-  background: #f0f0f0;
-}
-
 /* ─────────────────────────────────────────────────────────────────────────────
    Wil / Wattwil notice
 ───────────────────────────────────────────────────────────────────────────── */
@@ -511,22 +422,62 @@ select {
 }
 .wil-notice p {
   font-size: 13.5px;
-  font-weight: 300;
-  color: #333;
+  font-weight: 400;
+  color: #666;
   line-height: 1.65;
   margin: 0;
 }
 .wil-notice p + p { margin-top: 10px; }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Info card (bottom of form)
+   Arealplan link
+───────────────────────────────────────────────────────────────────────────── */
+#arealplan { margin-top: 14px; }
+
+.arealplan-link {
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #666;
+}
+.arealplan-link a { color: #1a6cc4; text-decoration: underline; }
+.arealplan-link a:hover { color: #0f4a8a; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Info card
 ───────────────────────────────────────────────────────────────────────────── */
 .info-card { border-top-color: var(--psg-green); }
 .info-card p {
   font-size: 13.5px;
-  font-weight: 300;
-  color: #333;
+  font-weight: 400;
+  color: #666;
   line-height: 1.7;
   margin: 0;
 }
 .info-card p + p { margin-top: 14px; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Mobile  (≤ 600px)
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  body { padding: 24px 12px 64px; }
+
+  .header-logo { height: 100px; }
+
+  h1 { font-size: 1.5rem; }
+
+  .card { padding: 18px 14px; }
+
+  /* Prevent iOS Safari zoom on input focus */
+  input[type=text],
+  input[type=email],
+  input[type=date],
+  input[type=number],
+  select { font-size: 16px; }
+
+  /* Touch-friendly tap targets */
+  .check-item          { min-height: 44px; }
+  .check-item.is-radio { min-height: 44px; width: 100%; }
+  .submit-btn          { min-height: 48px; padding: 14px 16px; }
+
+  .radio-grid { gap: 6px; }
+}

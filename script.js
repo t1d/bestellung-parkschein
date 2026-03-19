@@ -1,248 +1,230 @@
-// ── Arealplan PDFs (only for locations that have one) ─────────────────────────
+// ── Arealplan PDFs ────────────────────────────────────────────────────────────
 const AREALPLAN = {
-  'Heerbrugg': 'files/Arealplan_A4_quer_Heerbrugg_aktuell.pdf',
-  'Pfäfers':   'files/Arealplan_A4_quer_Pfaefers_aktuell.pdf',
-  'Wil':       'files/Arealplan_A4_quer_Wil_aktuell.pdf'
+  Heerbrugg: 'files/Arealplan_A4_quer_Heerbrugg_aktuell.pdf',
+  'Pfäfers':  'files/Arealplan_A4_quer_Pfaefers_aktuell.pdf',
+  Wil:        'files/Arealplan_A4_quer_Wil_aktuell.pdf',
 };
 
 // ── Standort data ─────────────────────────────────────────────────────────────
 // payment: 'parkingpay' | 'salär'
-// geteilt: true = geteilter Parkplatz, false = fix zugeteilt
 const STANDORT_DATA = {
-  'Heerbrugg': {
+  Heerbrugg: {
     payment: 'salär',
     options: [
-      { value: 'Heerbrugg Schloss', label: 'Schloss / Schlosstr. 203a', price: 'CHF 720.– / Jahr', geteilt: false },
-      { value: 'Heerbrugg Erlen',   label: 'Erlen / Bahnhofstr. 18',   price: 'CHF 720.– / Jahr', geteilt: false }
-    ]
+      { value: 'Heerbrugg Schloss', label: 'Schloss / Schlosstr. 203a', price: 'CHF 720.– / Jahr' },
+      { value: 'Heerbrugg Erlen',   label: 'Erlen / Bahnhofstr. 18',   price: 'CHF 720.– / Jahr' },
+    ],
   },
   'Pfäfers': {
     payment: 'parkingpay',
     options: [
-      { value: 'Pfäfers aussen',        label: 'Aussenparkplatz',  price: 'CHF 120.– / Jahr', geteilt: true },
-      { value: 'Pfäfers Unterstand B3', label: 'Unterstand B3',    price: 'CHF 480.– / Jahr', geteilt: true },
-      { value: 'Pfäfers Tiefgarage',    label: 'Tiefgarage',       price: 'CHF 600.– / Jahr', geteilt: true }
-    ]
+      { value: 'Pfäfers aussen',        label: 'Aussenparkplatz', price: 'CHF 120.– / Jahr' },
+      { value: 'Pfäfers Unterstand B3', label: 'Unterstand B3',   price: 'CHF 480.– / Jahr' },
+      { value: 'Pfäfers Tiefgarage',    label: 'Tiefgarage',      price: 'CHF 600.– / Jahr' },
+    ],
   },
-  'Rapperswil': {
+  Rapperswil: {
     payment: 'salär',
-    options: [
-      { value: 'Rapperswil', label: 'Rapperswil', price: 'CHF 720.– / Jahr', geteilt: false }
-    ]
+    options: [{ value: 'Rapperswil', label: 'Rapperswil', price: 'CHF 720.– / Jahr' }],
   },
-  'Rorschach': {
+  Rorschach: {
     payment: 'parkingpay',
-    options: [
-      { value: 'Rorschach', label: 'Rorschach', price: 'CHF 720.– / Jahr', geteilt: false }
-    ]
+    options: [{ value: 'Rorschach', label: 'Rorschach', price: 'CHF 720.– / Jahr' }],
   },
-  'Sargans': {
+  Sargans: {
     payment: 'salär',
-    options: [
-      { value: 'Sargans', label: 'Sargans (Parkplatz Sharing)', price: 'CHF 720.– / Jahr', geteilt: true }
-    ]
+    options: [{ value: 'Sargans', label: 'Sargans (Parkplatz Sharing)', price: 'CHF 720.– / Jahr' }],
   },
   'St.Gallen': {
     payment: 'parkingpay',
-    options: [
-      { value: 'St.Gallen', label: 'St.Gallen', price: 'CHF 720.– / Jahr', geteilt: false }
-    ]
+    options: [{ value: 'St.Gallen', label: 'St.Gallen', price: 'CHF 720.– / Jahr' }],
   },
-  'Uznach': {
+  Uznach: {
     payment: 'salär',
-    options: [
-      { value: 'Uznach', label: 'Uznach', price: 'CHF 660.– / Jahr', geteilt: false }
-    ]
+    options: [{ value: 'Uznach', label: 'Uznach', price: 'CHF 660.– / Jahr' }],
   },
-  'Wattwil': {
+  Wattwil: {
+    payment: 'parkingpay',
+    options: [{ value: 'Wattwil', label: 'Wattwil', price: 'CHF 720.– / Jahr' }],
+  },
+  Wil: {
     payment: 'parkingpay',
     options: [
-      { value: 'Wattwil', label: 'Wattwil', price: 'CHF 720.– / Jahr', geteilt: true }
-    ]
+      { value: 'Wil P2/P3', label: 'P2 / P3 (Parkplatz Sharing)', price: 'CHF 450.– / Jahr' },
+      { value: 'Wil P1',    label: 'P1 bei C05 / A02',            price: 'CHF 600.– / Jahr' },
+    ],
   },
-  'Wil': {
-    payment: 'parkingpay',
-    options: [
-      { value: 'Wil P2/P3', label: 'P2 / P3 (Parkplatz Sharing)', price: 'CHF 450.– / Jahr', geteilt: true  },
-      { value: 'Wil P1',    label: 'P1 bei C05 / A02', price: 'CHF 600.– / Jahr', geteilt: false }
-    ]
-  }
 };
 
-// ── Standort dropdown change ───────────────────────────────────────────────────
-function handleStandortChange(val) {
-  var data     = STANDORT_DATA[val];
-  var subDiv   = document.getElementById('standort-suboptions');
-  var notice   = document.getElementById('wil-wattwil-notice');
+// ── DOM refs ──────────────────────────────────────────────────────────────────
+const standortSelect   = document.getElementById('standort-select');
+const suboptionsWrap   = document.getElementById('standort-suboptions');
+const suboptionsGrid   = document.getElementById('suboptions-grid');
+const standortInfo     = document.getElementById('standort-info');
+const infoPayment      = document.getElementById('info-payment');
+const wilNotice        = document.getElementById('wil-wattwil-notice');
+const arealplanWrap    = document.getElementById('arealplan');
+const arealplanLink    = document.getElementById('arealplan-link');
+
+// ── Utilities ─────────────────────────────────────────────────────────────────
+const hide = el => el.classList.add('is-hidden');
+const show = el => el.classList.remove('is-hidden');
+
+const setError = (id, visible) =>
+  document.getElementById(id)?.classList.toggle('show', visible);
+
+const markField = (id, hasError) =>
+  document.getElementById(id)?.classList.toggle('error', hasError);
+
+const validateEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+// ── Standort change ───────────────────────────────────────────────────────────
+const handleStandortChange = val => {
+  const data = STANDORT_DATA[val];
 
   if (!val || !data) {
-    subDiv.style.display = 'none';
-    notice.style.display = 'none';
-    document.getElementById('standort-info').style.display = 'none';
-    document.getElementById('arealplan').style.display = 'none';
+    hide(suboptionsWrap);
+    hide(standortInfo);
+    hide(wilNotice);
+    hide(arealplanWrap);
     setError('err-suboption', false);
     return;
   }
 
-  // Wil / Wattwil special notice
-  notice.style.display = (val === 'Wil' || val === 'Wattwil') ? 'block' : 'none';
+  // Wil / Wattwil notice
+  wilNotice.classList.toggle('is-hidden', val !== 'Wil' && val !== 'Wattwil');
 
-  // Sub-options – radio (single selection), auto-select when only one option
-  var autoSelect = data.options.length === 1;
-  var grid = document.getElementById('suboptions-grid');
-  grid.className = 'standort-grid radio-grid';
-  grid.innerHTML = data.options.map(function (opt) {
-    var checked = autoSelect ? ' checked' : '';
-    var tileClass = autoSelect ? ' is-checked' : '';
-    return (
-      '<label class="check-item is-radio' + tileClass + '">' +
-        '<input type="radio" name="suboption" value="' + opt.value + '"' + checked + '>' +
-        '<span class="check-content">' +
-          '<span class="check-label">'  + opt.label + '</span>' +
-          '<span class="check-price">'  + opt.price + '</span>' +
-        '</span>' +
-      '</label>'
-    );
-  }).join('');
-  subDiv.style.display = 'block';
+  // Build radio tiles – auto-select when only one option
+  const autoSelect = data.options.length === 1;
+  suboptionsGrid.className = 'radio-grid';
+  suboptionsGrid.innerHTML = data.options.map(opt => `
+    <label class="check-item is-radio${autoSelect ? ' is-checked' : ''}">
+      <input type="radio" name="suboption" value="${opt.value}"${autoSelect ? ' checked' : ''}>
+      <span class="check-content">
+        <span class="check-label">${opt.label}</span>
+        <span class="check-price">${opt.price}</span>
+      </span>
+    </label>
+  `).join('');
+  show(suboptionsWrap);
   setError('err-suboption', false);
 
-  // Arealplan PDF link
-  var arealDiv = document.getElementById('arealplan');
+  // Payment badge
+  infoPayment.textContent = data.payment === 'parkingpay'
+    ? 'Parkplatz über Parking Pay'
+    : 'Abzug über Salär';
+  show(standortInfo);
+
+  // Arealplan link
   if (AREALPLAN[val]) {
-    document.getElementById('arealplan-link').href = AREALPLAN[val];
-    arealDiv.style.display = 'block';
+    arealplanLink.href = AREALPLAN[val];
+    show(arealplanWrap);
   } else {
-    arealDiv.style.display = 'none';
+    hide(arealplanWrap);
   }
 
   setError('err-standort', false);
-  updateLocationInfo();
-}
+};
 
-// ── Location info badge (payment method) ──────────────────────────────────────
-function updateLocationInfo() {
-  var val  = document.getElementById('standort-select').value;
-  var data = STANDORT_DATA[val];
-  var infoDiv   = document.getElementById('standort-info');
-  var paymentEl = document.getElementById('info-payment');
+standortSelect.addEventListener('change', e => handleStandortChange(e.target.value));
 
-  if (!val || !data) {
-    infoDiv.style.display = 'none';
-    return;
-  }
-
-  paymentEl.textContent = data.payment === 'parkingpay'
-    ? 'Parkplatz über Parking Pay'
-    : 'Abzug über Salär';
-
-  infoDiv.style.display = 'flex';
-}
-
-// ── Custom checkbox tiles (event-delegated) ────────────────────────────────────
-document.addEventListener('click', function (e) {
-  var tile = e.target.closest('.check-item');
+// ── Radio tile click (event-delegated) ───────────────────────────────────────
+document.addEventListener('click', e => {
+  const tile = e.target.closest('.check-item');
   if (!tile) return;
 
   e.preventDefault();
 
-  var cb = tile.querySelector('input[type=checkbox], input[type=radio]');
-  if (!cb) return;
+  const input = tile.querySelector('input[type=checkbox], input[type=radio]');
+  if (!input) return;
 
-  if (cb.type === 'radio') {
-    // Deselect all tiles in this group first
-    document.querySelectorAll('input[name="' + cb.name + '"]').forEach(function (r) {
+  if (input.type === 'radio') {
+    document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => {
       r.checked = false;
       r.closest('.check-item').classList.remove('is-checked');
     });
-    cb.checked = true;
+    input.checked = true;
     tile.classList.add('is-checked');
   } else {
-    cb.checked = !cb.checked;
-    tile.classList.toggle('is-checked', cb.checked);
+    input.checked = !input.checked;
+    tile.classList.toggle('is-checked', input.checked);
   }
-
 });
 
-// ── Validation helpers ─────────────────────────────────────────────────────────
-function validateEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+// Prevent the PDF link inside the reglement tile from toggling the checkbox
+document.getElementById('reglement-link')
+  .addEventListener('click', e => e.stopPropagation());
 
-function setError(id, show) {
-  var el = document.getElementById(id);
-  if (el) el.classList.toggle('show', show);
-}
+// ── Submit ────────────────────────────────────────────────────────────────────
+const handleSubmit = () => {
+  let valid = true;
 
-function markField(id, hasError) {
-  var el = document.getElementById(id);
-  if (el) el.classList.toggle('error', hasError);
-}
+  const require = (id, condition) => {
+    markField(id, !condition);
+    if (!condition) valid = false;
+  };
 
-// ── Submit ─────────────────────────────────────────────────────────────────────
-function handleSubmit() {
-  var valid = true;
+  const requireWithMsg = (errId, condition) => {
+    setError(errId, !condition);
+    if (!condition) valid = false;
+  };
 
-  // Standort dropdown
-  var standortVal = document.getElementById('standort-select').value;
-  var noStandort  = !standortVal;
-  setError('err-standort', noStandort);
-  if (noStandort) valid = false;
+  // Standort
+  const standortVal = standortSelect.value;
+  requireWithMsg('err-standort', standortVal);
 
-  // Parkplatz-Option (always required)
+  // Parkplatz-Option
   if (standortVal) {
-    var subChecked = document.querySelectorAll('input[name=suboption]:checked');
-    var noSub = subChecked.length === 0;
-    setError('err-suboption', noSub);
-    if (noSub) valid = false;
+    const checked = document.querySelectorAll('input[name=suboption]:checked').length > 0;
+    requireWithMsg('err-suboption', checked);
   }
 
   // Datum
-  var datum = document.getElementById('datum').value;
-  markField('datum', !datum);
-  if (!datum) valid = false;
+  require('datum', document.getElementById('datum').value);
 
   // Beschäftigungsgrad
-  var bgVal = document.getElementById('beschaeftigung').value;
-  var bg    = parseInt(bgVal, 10);
-  var bgErr = bgVal === '' || isNaN(bg) || bg < 0 || bg > 100;
-  markField('beschaeftigung', bgErr);
-  setError('err-beschaeftigung', bgErr);
-  if (bgErr) valid = false;
+  const bgRaw = document.getElementById('beschaeftigung').value;
+  const bg    = parseInt(bgRaw, 10);
+  const bgOk  = bgRaw !== '' && !isNaN(bg) && bg >= 0 && bg <= 100;
+  markField('beschaeftigung', !bgOk);
+  requireWithMsg('err-beschaeftigung', bgOk);
 
   // Name / Vorname
-  var name    = document.getElementById('name').value.trim();
-  var vorname = document.getElementById('vorname').value.trim();
-  markField('name',    !name);
-  markField('vorname', !vorname);
-  if (!name || !vorname) valid = false;
+  require('name',    document.getElementById('name').value.trim());
+  require('vorname', document.getElementById('vorname').value.trim());
 
   // E-Mail
-  var email    = document.getElementById('email').value.trim();
-  var emailErr = !validateEmail(email);
-  markField('email', emailErr);
-  setError('err-email', emailErr);
-  if (emailErr) valid = false;
+  const email   = document.getElementById('email').value.trim();
+  const emailOk = validateEmail(email);
+  markField('email', !emailOk);
+  requireWithMsg('err-email', emailOk);
 
-  // Funktion
-  var funktion = document.getElementById('funktion').value.trim();
-  markField('funktion', !funktion);
-  if (!funktion) valid = false;
+  // Funktion / Abteilung
+  require('funktion',  document.getElementById('funktion').value.trim());
+  require('abteilung', document.getElementById('abteilung').value.trim());
 
-  // Abteilung
-  var abt = document.getElementById('abteilung').value.trim();
-  markField('abteilung', !abt);
-  if (!abt) valid = false;
+  // Autokennzeichen
+  const kfzPattern = /^[A-Za-z]{2}\s?\d{1,6}$/;
+  const kfz1 = document.getElementById('kfz1').value.trim();
+  const kfz2 = document.getElementById('kfz2').value.trim();
+  const kfz3 = document.getElementById('kfz3').value.trim();
 
-  // Parkplatzreglement consent
-  var reglementOk = document.getElementById('reglement-cb').checked;
-  setError('err-reglement', !reglementOk);
-  if (!reglementOk) valid = false;
+  const kfz1Ok = kfz1 !== '' && kfzPattern.test(kfz1);
+  const kfz2Ok = kfz2 === '' || kfzPattern.test(kfz2);
+  const kfz3Ok = kfz3 === '' || kfzPattern.test(kfz3);
+
+  markField('kfz1', !kfz1Ok); requireWithMsg('err-kfz1', kfz1Ok);
+  markField('kfz2', !kfz2Ok); requireWithMsg('err-kfz2', kfz2Ok);
+  markField('kfz3', !kfz3Ok); requireWithMsg('err-kfz3', kfz3Ok);
+
+  // Parkplatzreglement
+  requireWithMsg('err-reglement', document.getElementById('reglement-cb').checked);
 
   if (!valid) return;
 
-  // All good – show success state
-  document.getElementById('main-form').classList.add('hidden');
-  document.getElementById('success-card').classList.add('show');
+  hide(document.getElementById('main-form'));
+  show(document.getElementById('success-card'));
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+};
+
+document.getElementById('submit-btn').addEventListener('click', handleSubmit);

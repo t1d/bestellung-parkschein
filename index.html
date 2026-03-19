@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Antrag Parkplatz – PSG</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antrag Parkplatz – PSG</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="wrapper">
 
-  <div class="header">
+  <header class="header">
     <img src="files/psg_logo.jpg" alt="Psychiatrie St.Gallen" class="header-logo">
     <h1>Antrag Parkplatz</h1>
-  </div>
+  </header>
 
-  <div id="main-form">
+  <main id="main-form">
 
     <!-- Standort -->
     <div class="card">
@@ -22,7 +22,7 @@
 
       <div class="field">
         <label for="standort-select">Gewünschter Standort <span class="req">*</span></label>
-        <select id="standort-select" onchange="handleStandortChange(this.value)">
+        <select id="standort-select">
           <option value="">— Bitte wählen —</option>
           <option value="Heerbrugg">Heerbrugg</option>
           <option value="Pfäfers">Pfäfers</option>
@@ -37,29 +37,24 @@
         <p class="error-msg" id="err-standort">Bitte einen Standort wählen.</p>
       </div>
 
-      <!-- Sub-options (locations with multiple parking choices) -->
-      <div id="standort-suboptions" class="field" style="display:none;">
+      <div id="standort-suboptions" class="field is-hidden">
         <label>Parkplatz-Option <span class="req">*</span></label>
-        <div class="standort-grid" id="suboptions-grid"></div>
+        <div class="radio-grid" id="suboptions-grid"></div>
         <p class="error-msg" id="err-suboption">Bitte eine Option wählen.</p>
       </div>
 
-      <!-- Location info badge (payment method) -->
-      <div id="standort-info" class="standort-info" style="display:none;">
+      <div id="standort-info" class="standort-info is-hidden">
         <span class="info-badge" id="info-payment"></span>
       </div>
 
-      <!-- Wil / Wattwil notice -->
-      <div id="wil-wattwil-notice" class="wil-notice" style="display:none;">
+      <div id="wil-wattwil-notice" class="wil-notice is-hidden">
         <p><strong>Standorte Wil und Wattwil:</strong> Änderungen des Beschäftigungsgrades während der Gültigkeitsdauer der Jahresbewilligung werden nicht automatisch berücksichtigt. Der Antrag ist bei einer Änderung neu einzureichen.</p>
         <p>Die Kosten der Jahresbewilligung werden in Abhängigkeit vom Beschäftigungsgrad berechnet. Mitarbeitende mit einem Beschäftigungsgrad von weniger als 40% können die Jahresvignette zum Preis von mindestens 40% des vollen Betrages erwerben.</p>
       </div>
 
-      <!-- Arealplan link -->
-      <div id="arealplan" style="display:none; margin-top:14px;">
+      <div id="arealplan" class="is-hidden">
         <p class="arealplan-link">Den Arealplan für den Standort finden Sie <a id="arealplan-link" href="#" target="_blank">hier</a>.</p>
       </div>
-
     </div>
 
     <!-- Personalangaben -->
@@ -68,12 +63,12 @@
 
       <div class="field">
         <label for="datum">Gültig ab <span class="req">*</span></label>
-        <input type="date" id="datum" />
+        <input type="date" id="datum">
       </div>
 
       <div class="field">
         <label for="beschaeftigung">Beschäftigungsgrad <span class="req">*</span></label>
-        <input type="number" id="beschaeftigung" min="0" max="100" placeholder="z.B. 80" />
+        <input type="number" id="beschaeftigung" min="0" max="100" placeholder="z.B. 80">
         <p class="hint">0–100 %</p>
         <p class="error-msg" id="err-beschaeftigung">Bitte geben Sie einen Wert zwischen 0 und 100 ein.</p>
       </div>
@@ -83,28 +78,28 @@
       <div class="row-2">
         <div class="field">
           <label for="name">Name <span class="req">*</span></label>
-          <input type="text" id="name" placeholder="Muster" />
+          <input type="text" id="name" placeholder="Muster">
         </div>
         <div class="field">
           <label for="vorname">Vorname <span class="req">*</span></label>
-          <input type="text" id="vorname" placeholder="Max" />
+          <input type="text" id="vorname" placeholder="Max">
         </div>
       </div>
 
       <div class="field">
         <label for="email">E-Mail (privat) <span class="req">*</span></label>
-        <input type="email" id="email" placeholder="max.muster@beispiel.ch" />
+        <input type="email" id="email" placeholder="max.muster@beispiel.ch">
         <p class="error-msg" id="err-email">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
       </div>
 
       <div class="field">
         <label for="funktion">Funktion / Berufsbezeichnung <span class="req">*</span></label>
-        <input type="text" id="funktion" placeholder="z.B. Pflegefachfrau HF" />
+        <input type="text" id="funktion" placeholder="z.B. Pflegefachfrau HF">
       </div>
 
       <div class="field">
         <label for="abteilung">Abteilung <span class="req">*</span></label>
-        <input type="text" id="abteilung" placeholder="z.B. Akutpsychiatrie" />
+        <input type="text" id="abteilung" placeholder="z.B. Akutpsychiatrie">
       </div>
 
       <div class="divider"></div>
@@ -113,12 +108,14 @@
         <label>Autokennzeichen</label>
         <p class="hint" style="margin-bottom:10px">Bis zu 3 Kennzeichen können angegeben werden.</p>
         <div class="row-3">
-          <input type="text" id="kfz1" placeholder="z.B. SG 123456" maxlength="12" />
-          <input type="text" id="kfz2" placeholder="Optional" maxlength="12" />
-          <input type="text" id="kfz3" placeholder="Optional" maxlength="12" />
+          <input type="text" id="kfz1" placeholder="z.B. SG 123456" maxlength="12">
+          <input type="text" id="kfz2" placeholder="Optional" maxlength="12">
+          <input type="text" id="kfz3" placeholder="Optional" maxlength="12">
         </div>
+        <p class="error-msg" id="err-kfz1">Format ungültig – bitte 2 Buchstaben gefolgt von bis zu 6 Ziffern (z.B. SG 123456).</p>
+        <p class="error-msg" id="err-kfz2">Format ungültig – bitte 2 Buchstaben gefolgt von bis zu 6 Ziffern (z.B. SG 123456).</p>
+        <p class="error-msg" id="err-kfz3">Format ungültig – bitte 2 Buchstaben gefolgt von bis zu 6 Ziffern (z.B. SG 123456).</p>
       </div>
-
     </div>
 
     <!-- Info text -->
@@ -133,22 +130,22 @@
         <input type="checkbox" id="reglement-cb">
         <span class="check-box"><span class="check-mark"></span></span>
         <span class="check-content">
-          <span class="check-label">Ich willige ein, dass ich das <a href="files/1.7_KO_Parkplatzreglement.pdf" target="_blank" onclick="event.stopPropagation()">Parkplatzreglement</a> zur Kenntnis genommen habe.</span>
+          <span class="check-label">Ich willige ein, dass ich das <a id="reglement-link" href="files/1.7_KO_Parkplatzreglement.pdf" target="_blank">Parkplatzreglement</a> zur Kenntnis genommen habe.</span>
         </span>
       </label>
       <p class="error-msg" id="err-reglement">Bitte bestätigen Sie, dass Sie das Parkplatzreglement gelesen haben.</p>
     </div>
 
     <!-- Submit -->
-    <div id="submit-section">
-      <button class="submit-btn" onclick="handleSubmit()">Antrag einreichen</button>
+    <div class="submit-section">
+      <button id="submit-btn" class="submit-btn">Antrag einreichen</button>
       <p class="submit-note">Der Antrag wird per E-Mail an <a href="mailto:parking@psychiatrie-sg.ch">parking@psychiatrie-sg.ch</a> weitergeleitet.</p>
     </div>
 
-  </div><!-- end main-form -->
+  </main>
 
   <!-- Success -->
-  <div class="success-card" id="success-card">
+  <div class="success-card is-hidden" id="success-card">
     <div class="success-icon">✓</div>
     <h2>Antrag eingereicht</h2>
     <p>Vielen Dank. Ihr Antrag wurde erfolgreich übermittelt.<br>Bei Fragen: <a href="mailto:parking@psychiatrie-sg.ch">parking@psychiatrie-sg.ch</a></p>
