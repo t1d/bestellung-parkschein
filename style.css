@@ -419,6 +419,65 @@ select {
 #main-form.hidden { display: none; }
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   Radio option tiles (suboptions)
+───────────────────────────────────────────────────────────────────────────── */
+
+/* Flex container so tiles shrink to content width on desktop */
+.radio-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.check-item.is-radio {
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 8px 16px;
+  min-width: 120px;
+}
+
+.check-item.is-radio input[type=radio] {
+  position: static;
+  opacity: 1;
+  width: 15px;
+  height: 15px;
+  clip: auto;
+  white-space: normal;
+  pointer-events: none;
+  flex-shrink: 0;
+  accent-color: var(--psg-black);
+  margin: 0;
+}
+
+.check-item.is-radio .check-content {
+  align-items: center;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Arealplan iframe – A4 landscape aspect ratio, fully visible
+───────────────────────────────────────────────────────────────────────────── */
+#arealplan-iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 297 / 210;
+  border: 1.5px solid var(--border);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Parkplatzreglement link
+───────────────────────────────────────────────────────────────────────────── */
+.confirm-item a {
+  color: #1a6cc4;
+  text-decoration: underline;
+}
+.confirm-item a:hover {
+  color: #0f4a8a;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
    Location info badges (payment method + parking type)
 ───────────────────────────────────────────────────────────────────────────── */
 .standort-info {

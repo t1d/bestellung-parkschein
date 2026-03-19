@@ -80,6 +80,7 @@ function handleStandortChange(val) {
     notice.style.display = 'none';
     document.getElementById('standort-info').style.display = 'none';
     document.getElementById('arealplan').style.display = 'none';
+    setError('err-suboption', false);
     return;
   }
 
@@ -89,13 +90,13 @@ function handleStandortChange(val) {
   // Sub-options – radio (single selection), auto-select when only one option
   var autoSelect = data.options.length === 1;
   var grid = document.getElementById('suboptions-grid');
+  grid.className = 'standort-grid radio-grid';
   grid.innerHTML = data.options.map(function (opt) {
     var checked = autoSelect ? ' checked' : '';
     var tileClass = autoSelect ? ' is-checked' : '';
     return (
-      '<label class="check-item' + tileClass + '">' +
+      '<label class="check-item is-radio' + tileClass + '">' +
         '<input type="radio" name="suboption" value="' + opt.value + '"' + checked + '>' +
-        '<span class="check-box"><span class="check-mark"></span></span>' +
         '<span class="check-content">' +
           '<span class="check-label">'  + opt.label + '</span>' +
           '<span class="check-price">'  + opt.price + '</span>' +
@@ -110,7 +111,7 @@ function handleStandortChange(val) {
   var arealDiv = document.getElementById('arealplan');
   var arealFrame = document.getElementById('arealplan-iframe');
   if (AREALPLAN[val]) {
-    arealFrame.src = AREALPLAN[val];
+    arealFrame.src = AREALPLAN[val] + '#toolbar=0&navpanes=0&scrollbar=0&view=Fit';
     arealDiv.style.display = 'block';
   } else {
     arealDiv.style.display = 'none';
@@ -146,7 +147,7 @@ document.addEventListener('click', function (e) {
 
   e.preventDefault();
 
-  var cb = tile.querySelector('input[type=checkbox]');
+  var cb = tile.querySelector('input[type=checkbox], input[type=radio]');
   if (!cb) return;
 
   if (cb.type === 'radio') {
