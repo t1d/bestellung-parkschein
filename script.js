@@ -19,7 +19,7 @@ const STANDORT_DATA = {
   'Pfäfers': {
     payment: 'parkingpay',
     options: [
-      { value: 'Pfäfers aussen',        label: 'Parkplatz aussen', price: 'CHF 120.– / Jahr', geteilt: true },
+      { value: 'Pfäfers aussen',        label: 'Aussenparkplatz',  price: 'CHF 120.– / Jahr', geteilt: true },
       { value: 'Pfäfers Unterstand B3', label: 'Unterstand B3',    price: 'CHF 480.– / Jahr', geteilt: true },
       { value: 'Pfäfers Tiefgarage',    label: 'Tiefgarage',       price: 'CHF 600.– / Jahr', geteilt: true }
     ]
@@ -107,11 +107,10 @@ function handleStandortChange(val) {
   subDiv.style.display = 'block';
   setError('err-suboption', false);
 
-  // Arealplan PDF
+  // Arealplan PDF link
   var arealDiv = document.getElementById('arealplan');
-  var arealFrame = document.getElementById('arealplan-iframe');
   if (AREALPLAN[val]) {
-    arealFrame.src = AREALPLAN[val] + '#toolbar=0&navpanes=0&scrollbar=0&view=Fit';
+    document.getElementById('arealplan-link').href = AREALPLAN[val];
     arealDiv.style.display = 'block';
   } else {
     arealDiv.style.display = 'none';
