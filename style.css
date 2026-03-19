@@ -31,7 +31,7 @@
   --psg-danger:      #cb4839;
   --psg-light:       #efefef;
 
-  --bg:              #f5f5f5;
+  --bg:              #ffffff;
   --surface:         #ffffff;
 
   --font-body:       Arial, sans-serif;
@@ -73,6 +73,13 @@ a:hover { text-decoration: underline; }
   margin-bottom: 36px;
   border-bottom: 2px solid var(--psg-black);
   padding-bottom: 24px;
+}
+
+.header-logo {
+  display: block;
+  height: 164px;
+  width: auto;
+  margin-bottom: 14px;
 }
 
 .header-badge {
